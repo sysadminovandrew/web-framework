@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "lib": ["ES6"],
+    "moduleResolution": "node",
+    "target": "es2020",
+    "module": "commonjs",
+    "types": ["node", "@wdio/mocha-framework", "webdriverio/async", "expect-webdriverio"]
+  },
+  "include": ["./**/*.ts", "./types/**/*.ts"],
+  "exclude": ["./node_modules/typescript/lib/lib.dom.d.ts"]
+}
