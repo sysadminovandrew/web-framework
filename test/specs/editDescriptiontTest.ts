@@ -5,7 +5,7 @@ import { after } from 'mocha';
 import api from '../../src/api/coreApi';
 
 let storeText = null;
-let catDesc: any = { name: 'Агата', description: 'Глаза цвета Агата', gender: 'female' };
+const catDesc: any = { name: 'Агата', description: 'Глаза цвета Агата', gender: 'female' };
 
 describe('Редактирование кота', async () => {
   before('Создание кота (если его еще нет)', async  () => {
@@ -31,13 +31,15 @@ describe('Редактирование кота', async () => {
     await (await CatInfoPage.description).click();
     await (await CatInfoPage.description).addValue(' Это очень хорошее имя');
     await (await CatInfoPage.saveDescription).click();
-    expect(await CatInfoPage.description).not.toHaveText(storeText);
+    const text = await (await CatInfoPage.description).getText();
+    expect(text).not.toEqual(storeText);
   });
 
   after(async () => {
     await (await CatInfoPage.editDescription).click();
     await (await CatInfoPage.description).setValue(storeText);
     await (await CatInfoPage.saveDescription).click();
-    expect(await CatInfoPage.description).toHaveText(storeText);
+    const text = await (await CatInfoPage.description).getText();
+    expect(text).toEqual(storeText);
   });
 });
