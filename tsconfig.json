@@ -4,7 +4,13 @@
     "moduleResolution": "node",
     "target": "es2020",
     "module": "commonjs",
-    "types": ["node", "@wdio/mocha-framework", "webdriverio/async", "expect-webdriverio"]
+    "types": [
+      "node",
+      "@wdio/mocha-framework",
+      "webdriverio/async",
+      "expect-webdriverio",
+      "wdio-image-comparison-service"
+    ]
   },
   "include": ["./**/*.ts", "./types/**/*.ts"],
   "exclude": ["./node_modules/typescript/lib/lib.dom.d.ts"]

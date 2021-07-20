@@ -1,5 +1,6 @@
 import Page from './Page';
 import Element from '../elements/Element';
+import * as path from 'path';
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -21,6 +22,14 @@ class CatInfoPage extends Page {
     return browser.element(element);
   }
 
+  get addPhoto() {
+    const element = new Element({
+      name: 'Сохранить фото',
+      locator: '//input[@type="file"]',
+    });
+    return browser.element(element);
+  }
+
   get editDescription() {
     const element = new Element({
       name: 'Изменить описание',
@@ -29,8 +38,21 @@ class CatInfoPage extends Page {
     return browser.element(element);
   }
 
+  async uploadPhoto(name: string) {
+    await browser.execute(() => {
+      // @ts-ignore
+      const field = document.querySelector('form input[type=file]');
+      // @ts-ignore
+      document.querySelector('[class*=photos_gallery]').appendChild(field);
+    });
+
+    const remoteFilePath = await browser.uploadFile(path.join(process.cwd(), `test/images/${name}.jpeg`));
+    await (await this.addPhoto).setValue(remoteFilePath);
+    await browser.refresh();
+  }
+
   open(id) {
-    return super.open(`/cats/${id}`);
+    return super.open(`cats/${id}`);
   }
 
   waitForLoaded() {

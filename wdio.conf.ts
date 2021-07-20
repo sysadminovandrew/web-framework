@@ -1,6 +1,7 @@
 import allureReporter from '@wdio/allure-reporter';
 import log from './src/log';
 import setCustomWdioCommands from './src/commands/setCustomWdioCommands';
+import * as path from 'path';
 
 exports.config = {
   runner: 'local',
@@ -16,12 +17,36 @@ exports.config = {
       browserName: 'chrome',
     },
   ],
-  logLevel: 'info',
+  logLevel: 'silent',
   bail: 0,
   baseUrl: 'https://meowle.qa-fintech.ru/',
   waitforTimeout: 10_000,
   connectionRetryTimeout: 120_000,
-  services: ['chromedriver'],
+  services: [
+    'chromedriver',
+    [
+      'image-comparison',
+      {
+        baselineFolder: path.join(process.cwd(), 'screens'),
+        formatImageName: '{tag}-{logName}-{width}x{height}',
+        screenshotPath: path.join(process.cwd(), 'tmp'),
+        savePerInstance: true,
+        autoSaveBaseline: true,
+        blockOutStatusBar: true,
+        blockOutToolBar: true,
+        tabbableOptions: {
+          circle: {
+            size: 18,
+            fontSize: 18,
+          },
+          line: {
+            color: '#ff221a',
+            width: 3,
+          },
+        },
+      },
+    ],
+  ],
   framework: 'mocha',
   reporters: [
     [

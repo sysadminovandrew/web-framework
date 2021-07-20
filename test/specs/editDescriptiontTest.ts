@@ -8,9 +8,9 @@ let storeText = null;
 const catDesc: any = { name: 'Агата', description: 'Глаза цвета Агата', gender: 'female' };
 
 describe('Редактирование кота', async () => {
-  before('Создание кота (если его еще нет)', async  () => {
+  before('Создание кота (если его еще нет)', async () => {
     await api.addCat(catDesc);
-  })
+  });
 
   it('Проверка редактирования описания', async () => {
     await MainPage.open();
@@ -24,15 +24,18 @@ describe('Редактирование кота', async () => {
 
     await cat.click();
     await CatInfoPage.waitForLoaded();
-
     storeText = await (await CatInfoPage.description).getText();
 
     await (await CatInfoPage.editDescription).click();
     await (await CatInfoPage.description).click();
     await (await CatInfoPage.description).addValue(' Это очень хорошее имя');
     await (await CatInfoPage.saveDescription).click();
-    const text = await (await CatInfoPage.description).getText();
-    expect(text).not.toEqual(storeText);
+
+    await CatInfoPage.uploadPhoto('cat');
+
+    expect(await browser.checkScreen('edit_test_scr1')).toEqual(0);
+    expect(await browser.checkElement(await CatInfoPage.description, 'edit_test_scr2')).toEqual(0);
+    expect(await browser.checkTabbablePage('edit_test_save-tabbable')).toEqual(0);
   });
 
   after(async () => {
