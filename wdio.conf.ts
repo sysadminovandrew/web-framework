@@ -21,7 +21,7 @@ exports.config = {
   baseUrl: 'https://meowle.qa-fintech.ru/',
   waitforTimeout: 10_000,
   connectionRetryTimeout: 120_000,
-  services: ['chromedriver'],
+  services: ['selenium-standalone'],
   framework: 'mocha',
   reporters: [
     [
