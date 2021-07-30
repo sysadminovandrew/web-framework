@@ -4,10 +4,10 @@ import setCustomWdioCommands from './src/commands/setCustomWdioCommands';
 
 exports.config = {
   runner: 'local',
-  specs: ['./test/specs/**/*.ts'],
+  specs: ['./test/specs/**/*.ts','./homework/ratingTest.ts'],
 
   suites: {
-    start: ['./test/specs/*equal*.ts', './test/specs/*edit*.ts'],
+    start: ['./test/specs/*equal*.ts', './test/specs/*edit*.ts','./homework/ratingTest.ts'],
   },
   maxInstances: 2,
 
@@ -16,7 +16,7 @@ exports.config = {
       browserName: 'chrome',
     },
   ],
-  logLevel: 'info',
+  logLevel: 'silent',
   bail: 0,
   baseUrl: 'https://meowle.qa-fintech.ru/',
   waitforTimeout: 10_000,
